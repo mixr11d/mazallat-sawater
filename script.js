@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  // Inject Footer with update Links
+  // Inject Footer with requested Links order under Privacy Policy
   const footerContainer = document.getElementById('globalFooter');
   if (footerContainer) {
     footerContainer.innerHTML = `
@@ -98,10 +98,10 @@ document.addEventListener('DOMContentLoaded', () => {
               <li><a href="index.html">الرئيسية</a></li>
               <li><a href="about-us.html">من نحن؟</a></li>
               <li><a href="contact-us.html">تواصل معنا</a></li>
-              <li><a href="faq.html">الأسئلة الشائعة</a></li>
-              <li><a href="warranty.html">وثيقة الضمان</a></li>
-              <li><a href="terms-conditions.html">الشروط والأحكام</a></li>
               <li><a href="privacy-policy.html">سياسة الخصوصية</a></li>
+              <li><a href="terms-conditions.html">الشروط والأحكام</a></li>
+              <li><a href="warranty.html">الضمان</a></li>
+              <li><a href="faq.html">الأسئلة الشائعة</a></li>
             </ul>
           </div>
           <div class="footer-column services-col">
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  // Inject Floating Action Buttons (Right) and Back To Top (Left)
+  // Inject Floating Buttons (Right) and Back To Top (Left)
   const floatingContainer = document.createElement('div');
   floatingContainer.innerHTML = `
     <div class="floating-actions" aria-label="أزرار التواصل السريع">
