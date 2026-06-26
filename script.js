@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  // Inject Footer (Swapped Columns & Developer WhatsApp Link Updated)
+  // Inject Footer (Swapped Columns & Developer WhatsApp Link)
   const footerContainer = document.getElementById('globalFooter');
   if (footerContainer) {
     footerContainer.innerHTML = `
@@ -212,7 +212,7 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// --- DYNAMIC FORM SUBMISSION WITH INTEGRITY CHECK & WA REDIRECT ---
+// --- FAULT-TOLERANT FORM SUBMISSION (INSTANT WHATSAPP REDIRECT) ---
 document.addEventListener('submit', (e) => {
   const form = e.target;
   if (!form.classList.contains('contact-form-element')) return;
@@ -232,39 +232,28 @@ document.addEventListener('submit', (e) => {
     formData.append('access_key', CONFIG.web3FormsKey);
   }
 
+  // 1. إرسال إشارة التحويل الإعلانية لقوقل
   trackGtagConversion('submit_form', 'lead', CONFIG.valForm);
 
-  // Send data to Web3Forms first for database backup
+  // 2. سحب البيانات فوراً لتكوين رابط الواتساب السريع
+  const name = form.querySelector('[id="userName"]') ? form.querySelector('[id="userName"]').value : (form.querySelector('[id="contactName"]') ? form.querySelector('[id="contactName"]').value : '');
+  const phone = form.querySelector('[id="userPhone"]') ? form.querySelector('[id="userPhone"]').value : (form.querySelector('[id="contactPhone"]') ? form.querySelector('[id="contactPhone"]').value : '');
+  const service = form.querySelector('[id="serviceType"]') ? form.querySelector('[id="serviceType"]').value : 'أعمال حدادة متنوعة';
+  const message = form.querySelector('[id="userMessage"]') ? form.querySelector('[id="userMessage"]').value : (form.querySelector('[id="contactMessage"]') ? form.querySelector('[id="contactMessage"]').value : '');
+
+  const textMessage = `السلام عليكم ورحمة الله، لقد قمت بإرسال طلب معاينة عبر الموقع الإعلاني:\n\n👤 *الاسم الكريم:* ${name}\n📱 *رقم الجوال:* ${phone}\n🛠️ *الخدمة المطلوبة:* ${service}\n📝 *تفاصيل الطلب:* ${message || 'لا يوجد تفاصيل إضافية'}`;
+  const whatsappUrl = `https://wa.me/${clientInt}?text=${encodeURIComponent(textMessage)}`;
+
+  // 3. محاولة إرسال البيانات للخلفية (دون تعطيل الزائر بأي رسالة خطأ)
   fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     body: formData
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      // Gather inputs to construct WhatsApp Message
-      const name = form.querySelector('[id="userName"]') ? form.querySelector('[id="userName"]').value : (form.querySelector('[id="contactName"]') ? form.querySelector('[id="contactName"]').value : '');
-      const phone = form.querySelector('[id="userPhone"]') ? form.querySelector('[id="userPhone"]').value : (form.querySelector('[id="contactPhone"]') ? form.querySelector('[id="contactPhone"]').value : '');
-      const service = form.querySelector('[id="serviceType"]') ? form.querySelector('[id="serviceType"]').value : 'أعمال حدادة متنوعة';
-      const message = form.querySelector('[id="userMessage"]') ? form.querySelector('[id="userMessage"]').value : (form.querySelector('[id="contactMessage"]') ? form.querySelector('[id="contactMessage"]').value : '');
+  }).catch(err => console.log("Form submit backed up to WhatsApp."));
 
-      // Construct a very professional prefilled message
-      const textMessage = `السلام عليكم ورحمة الله، لقد قمت بإرسال طلب معاينة عبر الموقع الإعلاني:\n\n👤 *الاسم الكريم:* ${name}\n📱 *رقم الجوال:* ${phone}\n🛠️ *الخدمة المطلوبة:* ${service}\n📝 *تفاصيل الطلب:* ${message || 'لا يوجد تفاصيل إضافية'}`;
-      
-      const whatsappUrl = `https://wa.me/${clientInt}?text=${encodeURIComponent(textMessage)}`;
-
-      // Redirect visitor immediately to Owner's WhatsApp
-      window.location.href = whatsappUrl;
-      form.reset();
-    } else {
-      alert('عذراً، حدث خطأ أثناء معالجة الطلب، يرجى المحاولة لاحقاً أو الاتصال مباشرة.');
-    }
-  })
-  .catch(error => {
-    console.error('Form submission error:', error);
-    alert('حدث خطأ في الاتصال. يرجى التحقق من اتصالك بالإنترنت.');
-  })
-  .finally(() => {
-    if (submitBtn) submitBtn.disabled = false;
-  });
+  // 4. التحويل الفوري المباشر والمضمون 100% للواتساب
+  window.location.href = whatsappUrl;
+  
+  // إعادة تهيئة النموذج
+  form.reset();
+  if (submitBtn) submitBtn.disabled = false;
 });
