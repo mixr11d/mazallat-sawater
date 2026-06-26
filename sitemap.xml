@@ -25,6 +25,24 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://username.github.io/repo/terms-conditions.html</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://username.github.io/repo/warranty.html</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://username.github.io/repo/faq.html</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://username.github.io/repo/car-parking-umbrellas.html</loc>
     <lastmod>2026-05-15</lastmod>
     <changefreq>monthly</changefreq>
