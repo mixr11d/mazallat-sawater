@@ -1,0 +1,20 @@
+# حداد الاحتراف بالرياض - Local Blacksmithing & Aluminum Services
+
+This website serves as the primary digital asset for "حداد الاحتراف بالرياض", a premier blacksmithing and aluminum workshop operating in Riyadh, Saudi Arabia.
+
+## Contact Information
+- **Business Name:** حداد الاحتراف بالرياض
+- **Primary Phone (Local):** 0532744390
+- **International/WhatsApp:** +966532744390
+- **Service Area:** Riyadh, Saudi Arabia (All districts)
+
+## Key Services Offered
+1. **Car Parking Umbrellas (مظلات مواقف سيارات):** High-durability structural fabric, cantilever, and metallic covers designed to block heat and UV rays in residential and commercial properties.
+2. **Bamboo & Reed Umbrellas (مظلات خيزران وقش):** Organic aesthetic shading and gazebos crafted from natural bamboo materials for gardens, cafes, and open resorts.
+3. **Privacy Screens & Fences (سواتر جدران وخصوصية):** Heavy-duty steel louvers and woven iron designs installed on residential walls to guarantee ultimate security and family privacy.
+4. **Sandwich Panel Shading & Insulation (ساندوتش بانل عازل):** Professional thermal-insulated cladding and roofing systems for industrial warehouses, outdoor rooms, and annexes.
+5. **Aluminum Doors & Windows (ألمنيوم أبواب ودرايش):** Custom-made dustproof and acoustic double-glazed aluminum systems built with high-quality profiles.
+
+## Technical Specifications
+- Built as a highly optimized static multi-page website on GitHub Pages.
+- Leverages Centralized Controller architecture via `script.js` for lightweight dynamic injection and clean Google Ads conversion tracking.
