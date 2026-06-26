@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  // Inject Footer with requested Links order under Privacy Policy
+  // Inject Footer (Swapped Columns & Developer WhatsApp Link Updated)
   const footerContainer = document.getElementById('globalFooter');
   if (footerContainer) {
     footerContainer.innerHTML = `
@@ -91,6 +91,16 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="footer-column info-col">
             <h3>${CONFIG.businessName}</h3>
             <p>متخصصون في توريد وتركيب كافة أنواع المظلات، السواتر، الساندوتش بانل وأعمال الألمنيوم في الرياض بأعلى معايير الجودة والدقة.</p>
+          </div>
+          <div class="footer-column services-col">
+            <h3>خدماتنا المميزة</h3>
+            <ul>
+              <li><a href="car-parking-umbrellas.html">مظلات سيارات</a></li>
+              <li><a href="bamboo-umbrellas.html">مظلات خيزران</a></li>
+              <li><a href="privacy-screens.html">سواتر خصوصية</a></li>
+              <li><a href="sandwich-panels.html">ساندوتش بانل</a></li>
+              <li><a href="aluminum-doors-windows.html">أبواب ونوافذ ألمنيوم</a></li>
+            </ul>
           </div>
           <div class="footer-column links-col">
             <h3>روابط سريعة</h3>
@@ -104,16 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
               <li><a href="faq.html">الأسئلة الشائعة</a></li>
             </ul>
           </div>
-          <div class="footer-column services-col">
-            <h3>خدماتنا المميزة</h3>
-            <ul>
-              <li><a href="car-parking-umbrellas.html">مظلات سيارات</a></li>
-              <li><a href="bamboo-umbrellas.html">مظلات خيزران</a></li>
-              <li><a href="privacy-screens.html">سواتر خصوصية</a></li>
-              <li><a href="sandwich-panels.html">ساندوتش بانل</a></li>
-              <li><a href="aluminum-doors-windows.html">أبواب ونوافذ ألمنيوم</a></li>
-            </ul>
-          </div>
           <div class="footer-column contact-col">
             <h3>اتصل بنا</h3>
             <p>نطاق العمل: الرياض والمناطق المجاورة</p>
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="footer-bottom">
           <p>&copy; ${new Date().getFullYear()} ${CONFIG.businessName}. جميع الحقوق محفوظة.</p>
-          <p class="developer-text">تطوير ودعم تقني: <a href="tel:${devLocal}" target="_blank" rel="noopener noreferrer" aria-label="اتصل بالمطور الرعد التقني">${CONFIG.devPhoneRaw} (الرعد التقني)</a></p>
+          <p class="developer-text">تطوير ودعم تقني: <a href="https://wa.me/${devInt}" target="_blank" rel="noopener noreferrer" aria-label="تواصل مع المطور الرعد التقني عبر واتساب">${CONFIG.devPhoneRaw} (الرعد التقني)</a></p>
         </div>
       </footer>
     `;
@@ -212,7 +212,7 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// --- DYNAMIC FORM SUBMISSION WITH INTEGRITY CHECK ---
+// --- DYNAMIC FORM SUBMISSION WITH INTEGRITY CHECK & WA REDIRECT ---
 document.addEventListener('submit', (e) => {
   const form = e.target;
   if (!form.classList.contains('contact-form-element')) return;
@@ -234,6 +234,7 @@ document.addEventListener('submit', (e) => {
 
   trackGtagConversion('submit_form', 'lead', CONFIG.valForm);
 
+  // Send data to Web3Forms first for database backup
   fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     body: formData
@@ -241,15 +242,27 @@ document.addEventListener('submit', (e) => {
   .then(response => response.json())
   .then(data => {
     if (data.success) {
-      alert('تم إرسال رسالتك بنجاح! سنتواصل معك في أقرب وقت.');
+      // Gather inputs to construct WhatsApp Message
+      const name = form.querySelector('[id="userName"]') ? form.querySelector('[id="userName"]').value : (form.querySelector('[id="contactName"]') ? form.querySelector('[id="contactName"]').value : '');
+      const phone = form.querySelector('[id="userPhone"]') ? form.querySelector('[id="userPhone"]').value : (form.querySelector('[id="contactPhone"]') ? form.querySelector('[id="contactPhone"]').value : '');
+      const service = form.querySelector('[id="serviceType"]') ? form.querySelector('[id="serviceType"]').value : 'أعمال حدادة متنوعة';
+      const message = form.querySelector('[id="userMessage"]') ? form.querySelector('[id="userMessage"]').value : (form.querySelector('[id="contactMessage"]') ? form.querySelector('[id="contactMessage"]').value : '');
+
+      // Construct a very professional prefilled message
+      const textMessage = `السلام عليكم ورحمة الله، لقد قمت بإرسال طلب معاينة عبر الموقع الإعلاني:\n\n👤 *الاسم الكريم:* ${name}\n📱 *رقم الجوال:* ${phone}\n🛠️ *الخدمة المطلوبة:* ${service}\n📝 *تفاصيل الطلب:* ${message || 'لا يوجد تفاصيل إضافية'}`;
+      
+      const whatsappUrl = `https://wa.me/${clientInt}?text=${encodeURIComponent(textMessage)}`;
+
+      // Redirect visitor immediately to Owner's WhatsApp
+      window.location.href = whatsappUrl;
       form.reset();
     } else {
-      alert('عذراً، لم تكتمل عملية الإرسال. يرجى تجربة خيار الاتصال المباشر.');
+      alert('عذراً، حدث خطأ أثناء معالجة الطلب، يرجى المحاولة لاحقاً أو الاتصال مباشرة.');
     }
   })
   .catch(error => {
-    console.error('Form processing error:', error);
-    alert('حدث خطأ غير متوقع. يرجى مراجعة اتصال الإنترنت وإعادة المحاولة.');
+    console.error('Form submission error:', error);
+    alert('حدث خطأ في الاتصال. يرجى التحقق من اتصالك بالإنترنت.');
   })
   .finally(() => {
     if (submitBtn) submitBtn.disabled = false;
