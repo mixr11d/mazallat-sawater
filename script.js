@@ -2,7 +2,7 @@
 const CONFIG = {
   clientPhoneRaw: '0532744390', // هاتف العميل المحلي
   devPhoneRaw: '0578539687',    // هاتف المطور (الرعد التقني)
-  googleAdsId: 'AW-1648753290',   // كود تتبع إعلانات قوقل (استبدله برقمك الفعلي)
+  googleAdsId: 'AW-1648753290',   // كود تتبع إعلانات قوقل
   web3FormsKey: '532744390',    // مفتاح الوصول Web3Forms الخاص بك
   valCall: 50,                  // قيمة تحويل الاتصال بالريال
   valWhatsapp: 45,              // قيمة تحويل الواتساب بالريال
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  // Inject Footer
+  // Inject Footer with update Links
   const footerContainer = document.getElementById('globalFooter');
   if (footerContainer) {
     footerContainer.innerHTML = `
@@ -98,6 +98,9 @@ document.addEventListener('DOMContentLoaded', () => {
               <li><a href="index.html">الرئيسية</a></li>
               <li><a href="about-us.html">من نحن؟</a></li>
               <li><a href="contact-us.html">تواصل معنا</a></li>
+              <li><a href="faq.html">الأسئلة الشائعة</a></li>
+              <li><a href="warranty.html">وثيقة الضمان</a></li>
+              <li><a href="terms-conditions.html">الشروط والأحكام</a></li>
               <li><a href="privacy-policy.html">سياسة الخصوصية</a></li>
             </ul>
           </div>
@@ -126,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  // Inject Floating Action Buttons
+  // Inject Floating Action Buttons (Right) and Back To Top (Left)
   const floatingContainer = document.createElement('div');
   floatingContainer.innerHTML = `
     <div class="floating-actions" aria-label="أزرار التواصل السريع">
@@ -138,10 +141,10 @@ document.addEventListener('DOMContentLoaded', () => {
         <span class="icon">📞</span>
         <span class="text">اتصال</span>
       </a>
-      <button id="backToTop" class="btn-back-to-top" aria-label="الرجوع لأعلى الصفحة" style="display: none;">
-        ↑
-      </button>
     </div>
+    <button id="backToTop" class="btn-back-to-top" aria-label="الرجوع لأعلى الصفحة" style="display: none;">
+      ↑
+    </button>
   `;
   document.body.appendChild(floatingContainer);
 
@@ -169,7 +172,6 @@ document.addEventListener('DOMContentLoaded', () => {
       dropdownContent.style.display = isExpanded ? 'none' : 'block';
     });
 
-    // Close on clicking outside
     document.addEventListener('click', (e) => {
       if (!dropdownBtn.contains(e.target) && !dropdownContent.contains(e.target)) {
         dropdownBtn.setAttribute('aria-expanded', 'false');
@@ -183,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (backToTopBtn) {
     window.addEventListener('scroll', () => {
       if (window.scrollY > 300) {
-        backToTopBtn.style.display = 'block';
+        backToTopBtn.style.display = 'flex';
       } else {
         backToTopBtn.style.display = 'none';
       }
@@ -230,7 +232,6 @@ document.addEventListener('submit', (e) => {
     formData.append('access_key', CONFIG.web3FormsKey);
   }
 
-  // Fire conversion event immediately upon valid submit
   trackGtagConversion('submit_form', 'lead', CONFIG.valForm);
 
   fetch('https://api.web3forms.com/submit', {
