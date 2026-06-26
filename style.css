@@ -1,9 +1,9 @@
-/* --- FLOATING ACTIONS CONTAINER (NOW ON THE RIGHT) --- */
+/* --- FLOATING ACTIONS CONTAINER (FIXED TO THE RIGHT) --- */
 .floating-actions {
   position: fixed;
   bottom: 20px;
-  right: 20px; /* نقل الأزرار بالكامل إلى الجهة اليمنى */
-  left: auto;
+  right: 20px; /* اليمين */
+  left: auto !important;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -37,12 +37,12 @@
   background-color: #0284c7;
 }
 
-/* --- BACK TO TOP BUTTON (NOW SEPARATED ON THE LEFT) --- */
+/* --- BACK TO TOP BUTTON (FIXED TO THE LEFT) --- */
 .btn-back-to-top {
   position: fixed;
   bottom: 20px;
-  left: 20px; /* تثبيت زر الصعود في الجهة اليسرى */
-  right: auto;
+  left: 20px; /* اليسار */
+  right: auto !important;
   width: 45px;
   height: 45px;
   border-radius: 50%;
@@ -50,7 +50,7 @@
   color: var(--white);
   border: none;
   cursor: pointer;
-  display: flex; /* تعديل لضمان توسيط السهم تماماً */
+  display: none; /* يتم تشغيله flex ديناميكياً بواسطة JS */
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
