@@ -20,7 +20,7 @@
 
 html, body {
   max-width: 100% !important;
-  overflow-x: hidden !important; /* يمنع أي انزياح أو ظهور شريط تمرير أفقي على الجوال */
+  overflow-x: hidden !important; /* يمنع أي انزياح أو ظهور شريط تمرير أفقي على الجوال نهائياً */
   -webkit-text-size-adjust: 100%; /* يمنع متصفحات آبل من تكبير الخطوط تلقائياً */
   background-color: var(--light-color);
   color: var(--dark-color);
@@ -50,11 +50,16 @@ html {
   width: 100%;
 }
 
-/* --- NAVIGATION BAR --- */
+/* --- NAVIGATION BAR & CONTAINER (الإصلاح الجذري للهيدر) --- */
 .nav-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  width: 100%;
+  background-color: var(--white);
+}
+
+.nav-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important; /* توزيع العناصر على الأطراف أفقياً بالتساوي */
   padding: 15px 20px;
   max-width: 1200px;
   margin: 0 auto;
@@ -62,7 +67,7 @@ html {
 }
 
 .nav-logo {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: var(--primary-color);
   text-decoration: none;
@@ -522,15 +527,14 @@ main p {
   font-weight: bold;
 }
 
-/* --- RESPONSIVE MEDIA QUERIES --- */
+/* --- RESPONSIVE MEDIA QUERIES (تحسينات الجوال الشاملة للهيدر) --- */
 @media (max-width: 768px) {
   .menu-toggle {
-    display: flex;
+    display: flex !important; /* إظهار زر الهمبرغر على الجوال */
   }
 
-  .nav-bar {
-    justify-content: space-between;
-    padding: 15px;
+  .nav-container {
+    padding: 10px 15px !important;
   }
 
   .nav-links {
